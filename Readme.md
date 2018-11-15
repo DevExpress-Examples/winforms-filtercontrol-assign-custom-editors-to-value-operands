@@ -1,3 +1,9 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [Form1.cs](./CS/CustomEditor/Form1.cs) (VB: [Form1.vb](./VB/CustomEditor/Form1.vb))
+* [Program.cs](./CS/CustomEditor/Program.cs) (VB: [Program.vb](./VB/CustomEditor/Program.vb))
+<!-- default file list end -->
 # How to provide custom editors to edit value operands in the FilterControl
 
 
