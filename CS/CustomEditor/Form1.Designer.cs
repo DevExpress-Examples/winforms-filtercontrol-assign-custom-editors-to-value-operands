@@ -13,6 +13,10 @@ namespace DXDemos {
             if(disposing && (components != null)) {
                 components.Dispose();
             }
+            if(disposing) {
+                spinEdit.Dispose();
+                calcEdit.Dispose();
+            }
             base.Dispose(disposing);
         }
 

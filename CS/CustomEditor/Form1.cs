@@ -28,17 +28,18 @@ namespace DXDemos {
         }
         #region #1
         private void gridView1_FilterEditorCreated(object sender, FilterControlEventArgs e) {
-            e.FilterControl.BeforeShowValueEditor += 
-new ShowValueEditorEventHandler(FilterControl_BeforeShowValueEditor);
+            e.FilterControl.BeforeShowValueEditor += FilterControl_BeforeShowValueEditor;
         }
 
+        readonly RepositoryItemSpinEdit spinEdit = new RepositoryItemSpinEdit();
+        readonly RepositoryItemCalcEdit calcEdit= new RepositoryItemCalcEdit();
         void FilterControl_BeforeShowValueEditor(object sender, ShowValueEditorEventArgs e) {
             if(e.CurrentNode.FirstOperand.PropertyName != "Payment") return;
             RepositoryItemTextEdit item = null;
             if(e.FocusedElementIndex == 2)
-                item = new RepositoryItemSpinEdit();
+                item = spinEdit;
             else
-                item = new RepositoryItemCalcEdit();
+                item = calcEdit;
             item.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             item.Mask.EditMask = "c";
             e.CustomRepositoryItem = item;
