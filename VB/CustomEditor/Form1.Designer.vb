@@ -1,6 +1,4 @@
-Imports Microsoft.VisualBasic
-Imports System
-Namespace DXDemos
+﻿Namespace DXDemos
 	Partial Public Class Form1
 		''' <summary>
 		''' Required designer variable.
@@ -14,6 +12,10 @@ Namespace DXDemos
 		Protected Overrides Sub Dispose(ByVal disposing As Boolean)
 			If disposing AndAlso (components IsNot Nothing) Then
 				components.Dispose()
+			End If
+			If disposing Then
+				spinEdit.Dispose()
+				calcEdit.Dispose()
 			End If
 			MyBase.Dispose(disposing)
 		End Sub
@@ -45,7 +47,8 @@ Namespace DXDemos
 			' 
 			Me.gridView1.GridControl = Me.gridControl1
 			Me.gridView1.Name = "gridView1"
-'			Me.gridView1.FilterEditorCreated += New DevExpress.XtraGrid.Views.Base.FilterControlEventHandler(Me.gridView1_FilterEditorCreated);
+'INSTANT VB NOTE: The following InitializeComponent event wireup was converted to a 'Handles' clause:
+'ORIGINAL LINE: this.gridView1.FilterEditorCreated += new DevExpress.XtraGrid.Views.Base.FilterControlEventHandler(this.gridView1_FilterEditorCreated);
 			' 
 			' Form1
 			' 
@@ -55,7 +58,8 @@ Namespace DXDemos
 			Me.Controls.Add(Me.gridControl1)
 			Me.Name = "Form1"
 			Me.Text = "Form1"
-'			Me.Load += New System.EventHandler(Me.Form1_Load);
+'INSTANT VB NOTE: The following InitializeComponent event wireup was converted to a 'Handles' clause:
+'ORIGINAL LINE: this.Load += new System.EventHandler(this.Form1_Load);
 			CType(Me.gridControl1, System.ComponentModel.ISupportInitialize).EndInit()
 			CType(Me.gridView1, System.ComponentModel.ISupportInitialize).EndInit()
 			Me.ResumeLayout(False)
