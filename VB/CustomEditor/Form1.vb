@@ -1,62 +1,53 @@
-Imports Microsoft.VisualBasic
 Imports System
-Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Data
 Imports System.Drawing
-Imports System.Text
 Imports System.Windows.Forms
 Imports DevExpress.XtraEditors.Controls
 Imports DevExpress.XtraEditors.Repository
-Imports DevExpress.XtraGrid.Views.Base
 Imports DevExpress.XtraEditors.Filtering
+Imports DevExpress.XtraGrid.Views.Base
 
 Namespace DXDemos
-	Partial Public Class Form1
-		Inherits Form
-		Public Sub New()
-			InitializeComponent()
-		End Sub
 
-		Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) _
-		Handles MyBase.Load
-			Dim tbl As New DataTable()
-			tbl.Columns.Add("ID", GetType(Integer))
-			tbl.Columns.Add("Name", GetType(String))
-			tbl.Columns.Add("Payment", GetType(Decimal))
-			For i As Integer = 1 To 9
-				tbl.Rows.Add(i, String.Format("Item {0}", i), i * 15.5)
-			Next i
-			gridControl1.DataSource = tbl
-			gridView1.ActiveFilterString = "[Payment] Between (50, 120)"
-		End Sub
+    Public Partial Class Form1
+        Inherits Form
 
-		#Region "#1"
-		Private Sub gridView1_FilterEditorCreated(ByVal sender As Object, _
-		ByVal e As FilterControlEventArgs) Handles gridView1.FilterEditorCreated
-			AddHandler e.FilterControl.BeforeShowValueEditor, _
-			AddressOf FilterControl_BeforeShowValueEditor
-		End Sub
+        Public Sub New()
+            InitializeComponent()
+        End Sub
 
-		Private Sub FilterControl_BeforeShowValueEditor(ByVal sender As Object, _
-		ByVal e As ShowValueEditorEventArgs)
-			If e.CurrentNode.FirstOperand.PropertyName <> "Payment" Then
-				Return
-			End If
+        Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs)
+            Dim tbl As DataTable = New DataTable()
+            tbl.Columns.Add("ID", GetType(Integer))
+            tbl.Columns.Add("Name", GetType(String))
+            tbl.Columns.Add("Payment", GetType(Decimal))
+            For i As Integer = 1 To 10 - 1
+                tbl.Rows.Add(i, String.Format("Item {0}", i), i * 15.5)
+            Next
 
-			Dim item As RepositoryItemTextEdit = Nothing
+            gridControl1.DataSource = tbl
+            gridView1.ActiveFilterString = "[Payment] Between (50, 120)"
+        End Sub
 
-			If e.FocusedElementIndex = 2 Then
-				item = New RepositoryItemSpinEdit()
-			Else
-				item = New RepositoryItemCalcEdit()
-			End If
+#Region "#1"
+        Private Sub gridView1_FilterEditorCreated(ByVal sender As Object, ByVal e As FilterControlEventArgs)
+            AddHandler e.FilterControl.BeforeShowValueEditor, New ShowValueEditorEventHandler(AddressOf FilterControl_BeforeShowValueEditor)
+        End Sub
 
-			item.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
-			item.Mask.EditMask = "c"
+        Private Sub FilterControl_BeforeShowValueEditor(ByVal sender As Object, ByVal e As ShowValueEditorEventArgs)
+            If Not Equals(e.CurrentNode.FirstOperand.PropertyName, "Payment") Then Return
+            Dim item As RepositoryItemTextEdit = Nothing
+            If e.FocusedElementIndex = 2 Then
+                item = New RepositoryItemSpinEdit()
+            Else
+                item = New RepositoryItemCalcEdit()
+            End If
 
-			e.CustomRepositoryItem = item
-		End Sub
-		#End Region ' #1
-	End Class
+            item.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
+            item.Mask.EditMask = "c"
+            e.CustomRepositoryItem = item
+        End Sub
+#End Region  ' #1
+    End Class
 End Namespace
