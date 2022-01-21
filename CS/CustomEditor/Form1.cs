@@ -9,6 +9,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraEditors.Mask;
 
 namespace DXDemos {
     public partial class Form1 : Form {
@@ -28,21 +29,22 @@ namespace DXDemos {
         }
         #region #1
         private void gridView1_FilterEditorCreated(object sender, FilterControlEventArgs e) {
-            e.FilterControl.BeforeShowValueEditor += FilterControl_BeforeShowValueEditor;
+            e.FilterEditor.CustomValueEditor += FilterEditor_CustomValueEditor;
         }
 
         readonly RepositoryItemSpinEdit spinEdit = new RepositoryItemSpinEdit();
-        readonly RepositoryItemCalcEdit calcEdit= new RepositoryItemCalcEdit();
-        void FilterControl_BeforeShowValueEditor(object sender, ShowValueEditorEventArgs e) {
-            if(e.CurrentNode.FirstOperand.PropertyName != "Payment") return;
+        readonly RepositoryItemCalcEdit calcEdit = new RepositoryItemCalcEdit();
+
+        private void FilterEditor_CustomValueEditor(object sender, CustomValueEditorArgs e) {
+            if (e.Node.FirstOperand.PropertyName != "Payment") return;
             RepositoryItemTextEdit item = null;
-            if(e.FocusedElementIndex == 2)
+            if (e.ElementIndex == 2)
                 item = spinEdit;
             else
                 item = calcEdit;
-            item.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            item.Mask.EditMask = "c";
-            e.CustomRepositoryItem = item;
+            var settings = item.MaskSettings.Configure<MaskSettings.Numeric>();
+            settings.MaskExpression = "c";
+            e.RepositoryItem = item;
         }
         #endregion #1
     }
