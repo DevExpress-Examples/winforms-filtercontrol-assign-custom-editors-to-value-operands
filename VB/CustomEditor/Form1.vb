@@ -32,16 +32,20 @@ Namespace DXDemos
 
 #Region "#1"
         Private Sub gridView1_FilterEditorCreated(ByVal sender As Object, ByVal e As FilterControlEventArgs)
-            AddHandler e.FilterControl.BeforeShowValueEditor, New ShowValueEditorEventHandler(AddressOf FilterControl_BeforeShowValueEditor)
+            AddHandler e.FilterControl.BeforeShowValueEditor, AddressOf FilterControl_BeforeShowValueEditor
         End Sub
+
+        Private ReadOnly spinEdit As RepositoryItemSpinEdit = New RepositoryItemSpinEdit()
+
+        Private ReadOnly calcEdit As RepositoryItemCalcEdit = New RepositoryItemCalcEdit()
 
         Private Sub FilterControl_BeforeShowValueEditor(ByVal sender As Object, ByVal e As ShowValueEditorEventArgs)
             If Not Equals(e.CurrentNode.FirstOperand.PropertyName, "Payment") Then Return
             Dim item As RepositoryItemTextEdit = Nothing
             If e.FocusedElementIndex = 2 Then
-                item = New RepositoryItemSpinEdit()
+                item = spinEdit
             Else
-                item = New RepositoryItemCalcEdit()
+                item = calcEdit
             End If
 
             item.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric

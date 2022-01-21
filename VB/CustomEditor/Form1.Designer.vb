@@ -16,6 +16,11 @@ Namespace DXDemos
                 Me.components.Dispose()
             End If
 
+            If disposing Then
+                Me.spinEdit.Dispose()
+                Me.calcEdit.Dispose()
+            End If
+
             MyBase.Dispose(disposing)
         End Sub
 
